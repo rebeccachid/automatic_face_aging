@@ -9,10 +9,8 @@ import kagglehub
 from tqdm import tqdm
 
 # ----- Téléchargement et chargement du dataset UTKFace via KaggleHub -----
-# On utilise par exemple le dataset "jangedoo/utkface-new"
 path = kagglehub.dataset_download("jangedoo/utkface-new")
-# Supposons que les images se trouvent dans le dossier "UTKFace"
-utkface_dir = os.path.join(path, "UTKFace")  # Ajustez selon la structure
+utkface_dir = os.path.join(path, "UTKFace") 
 
 # Transformation d'entraînement et de validation (normalisation ImageNet)
 train_transform = transforms.Compose([
@@ -51,8 +49,6 @@ class UTKFaceDataset(Dataset):
         filename = self.image_files[idx]
         img_path = os.path.join(self.root_dir, filename)
         image = Image.open(img_path).convert("RGB")
-        # Extraire l'âge et le genre depuis le nom de fichier
-        # Format attendu: "age_gender_race_date.jpg"
         parts = filename.split('_')
         age = float(parts[0])
         gender = int(parts[1])  # 0: Male, 1: Female
