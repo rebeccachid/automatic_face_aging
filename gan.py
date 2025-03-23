@@ -13,7 +13,7 @@ import kagglehub
 # 1. Chargement du dataset UTKFace via KaggleHub
 # ---------------------------
 path = kagglehub.dataset_download("jangedoo/utkface-new")
-utkface_dir = os.path.join(path, "UTKFace")  # Ajustez selon la structure du dataset
+utkface_dir = os.path.join(path, "UTKFace")  
 
 transform = transforms.Compose([
     transforms.Resize((224, 224)),
@@ -32,7 +32,6 @@ class UTKFaceDataset(Dataset):
         filename = self.image_files[idx]
         img_path = os.path.join(self.root_dir, filename)
         image = Image.open(img_path).convert("RGB")
-        # On suppose que le nom de fichier commence par l'âge (ex: "25_...")
         age = float(filename.split('_')[0])
         if self.transform:
             image = self.transform(image)
@@ -44,7 +43,7 @@ dataloader = DataLoader(dataset, batch_size=16, shuffle=True)
 # ---------------------------
 # 2. Préparation de la condition d'âge
 # ---------------------------
-c_dim = 10  # Nombre de classes d'âge (exemple : 10 classes)
+c_dim = 10  # Nombre de classes d'âge
 def one_hot(labels, num_classes):
     return torch.eye(num_classes, device=labels.device)[labels]
 
